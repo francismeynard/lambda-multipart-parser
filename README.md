@@ -1,4 +1,7 @@
 # lambda-multipart-parser
+```
+npm install lambda-multipart-parser --save
+```
 
 ## Introduction
 This module will parse the multipart-form containing files and fields from the lambda event object.
@@ -24,3 +27,14 @@ This module will parse the multipart-form containing files and fields from the l
 ```
 
 ## Usage
+```
+const parser = require('lambda-multipart-parser');
+
+const result = await parser.parse(event);
+console.log(result.files);
+```
+
+## Test
+```
+npm run test
+```
