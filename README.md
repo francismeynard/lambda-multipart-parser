@@ -4,7 +4,7 @@ npm install lambda-multipart-parser --save
 ```
 
 ## Introduction
-This module will parse the multipart-form containing files and fields from the lambda event object.
+This nodejs module will parse the multipart-form containing files and fields from the AWS lambda event object. It works very well parsing **binary** and text files.
 
 ## Description
 ```
@@ -33,6 +33,8 @@ const parser = require('lambda-multipart-parser');
 const result = await parser.parse(event);
 console.log(result.files);
 ```
+
+Sample Lambda implemetation with Cloudformation can be found in http://francismeynard.github.io/aws-upload-document-service.
 
 ## Test
 ```
