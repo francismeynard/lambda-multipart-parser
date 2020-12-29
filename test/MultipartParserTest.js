@@ -73,6 +73,26 @@ describe('MultipartParser', () => {
             assert.equal(file.encoding, "7bit");
             assert.equal(file.fieldname, "uploadFile1");
         });
+        
+        it('should parse the multipart form-data successfully given utf8 encoded form data', async () => {
+            // GIVEN
+            const html = "<p> </p>";
+            const event = {
+              headers: {
+                "Content-Type": "multipart/form-data; boundary=xYzZY",
+              },
+              body: `--xYzZY\r\nContent-Disposition: form-data; name="html"\r\n\r\n${html}\r\n--xYzZY--\r\n`,
+              encoding: 'utf8',
+            };
+
+            // WHEN
+            const result = await parser.parse(event);
+
+            // THEN
+            assert.equal(html, result.html);
+        });
+
+        
 
     });
 

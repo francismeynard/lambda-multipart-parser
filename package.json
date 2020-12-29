@@ -1,6 +1,6 @@
 {
     "name": "lambda-multipart-parser",
-    "version": "0.0.2",
+    "version": "0.0.3",
     "description": "This module will parse the multipart-form containing files and fields from the lambda event object.",
     "main": "index.js",
     "author": "francismeynard",

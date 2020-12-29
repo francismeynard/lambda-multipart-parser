@@ -60,7 +60,9 @@ const parse = (event) => new Promise((resolve, reject) => {
         resolve(result);
     });
 
-    busboy.write(event.body, event.isBase64Encoded ? 'base64' : 'binary');
+    const encoding = event.encoding || (event.isBase64Encoded ? "base64" : "binary");
+
+    busboy.write(event.body, encoding);
     busboy.end();
 });
 
