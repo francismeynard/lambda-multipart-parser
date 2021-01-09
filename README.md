@@ -45,3 +45,11 @@ Sample Lambda and API Gateway implementation with Cloudformation can be found in
 ```
 npm run test
 ```
+
+## Releases / Changelogs
+
+0.0.1 - Initial stable release.
+
+0.0.2 - Updated readme. Added Usage and link to sample implementation.
+
+1.0.0 - Formalized package release version. Add utf8 support.
