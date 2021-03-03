@@ -53,3 +53,5 @@ npm run test
 0.0.2 - Updated readme. Added Usage and link to sample implementation.
 
 1.0.0 - Formalized package release version. Add utf8 support.
+
+1.0.1 - Added support for TypeScript typings.
