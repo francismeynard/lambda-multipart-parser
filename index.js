@@ -1,6 +1,7 @@
 'use strict';
 
 const Busboy = require('busboy');
+const Crypto = require('crypto');
 
 /*
  * This module will parse the multipart-form containing files and fields from the lambda event object.
@@ -13,7 +14,9 @@ const Busboy = require('busboy');
                 content: <Buffer 25 50 6f 62 ... >,
                 contentType: 'application/pdf',
                 encoding: '7bit',
-                fieldname: 'uploadFile1'
+                fieldname: 'uploadFile1',
+                size: 26000,
+                checksum: "387d3143b0baa6beb292eda4f81b2d33e55c6744"
             }
         ],
         field1: 'VALUE1',
@@ -43,6 +46,8 @@ const parse = (event) => new Promise((resolve, reject) => {
                 uploadFile.contentType = mimetype;
                 uploadFile.encoding = encoding;
                 uploadFile.fieldname = fieldname;
+                uploadFile.size = Buffer.byteLength(uploadFile.content);
+                uploadFile.checksum = Crypto.createHash('sha1').update(uploadFile.content, "utf-8").digest('hex');
                 result.files.push(uploadFile);
             }
         });

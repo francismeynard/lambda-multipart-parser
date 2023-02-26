@@ -24,7 +24,8 @@
         "multipart/formdata"
     ],
     "dependencies": {
-        "busboy": "^0.3.0"
+        "busboy": "^0.3.0",
+        "crypto": "^1.0.1"
     },
     "devDependencies": {
         "chai": "^3.5.0",

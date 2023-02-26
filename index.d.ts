@@ -9,6 +9,8 @@ declare module "lambda-multipart-parser" {
         contentType: string
         encoding: string
         fieldname: string
+        size: number
+        checksum: string
     }
 
     type MultipartRequest = { files: MultipartFile[] } & Record<string, string>
