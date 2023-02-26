@@ -18,7 +18,9 @@ This nodejs module will parse the multipart-form containing files and fields fro
             content: <Buffer 25 50 6f 62 ... >,
             contentType: 'application/pdf',
             encoding: '7bit',
-            fieldname: 'uploadFile1'
+            fieldname: 'uploadFile1',
+            size: 26000,
+            checksum: "387d3143b0baa6beb292eda4f81b2d33e55c6744"
         }
     ],
     field1: 'VALUE1',
@@ -38,6 +40,9 @@ console.log(result.files);
 Please make sure to enable the "Use Lambda Proxy integration" in API Gateway method Integration request. 
 
 If decided not to enable it for some reason, make sure to pass the required Lambda event parameters in Integration Request -> Mapping Templates section, such as body, headers and isBase64Encoded flag.
+
+The `size` of every file is in **bytes**.
+The `checksum` of every file is calculated using **SHA1** hashing algorithm.
 
 Sample Lambda and API Gateway implementation with Cloudformation can be found in [here](http://francismeynard.github.io/aws-upload-document-service).
 

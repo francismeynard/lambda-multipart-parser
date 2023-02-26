@@ -46,6 +46,7 @@ describe('MultipartParser', () => {
             assert.equal(file.encoding, "7bit");
             assert.equal(file.fieldname, "uploadFile1");
             assert.equal(file.size, 12);
+            assert.equal(file.checksum, "2ef7bde608ce5404e97d5f042f95f89f1c232871");
         });
 
         it('should parse the multipart form-data successfully given base64 encoded form data', async () => {
@@ -74,6 +75,7 @@ describe('MultipartParser', () => {
             assert.equal(file.encoding, "7bit");
             assert.equal(file.fieldname, "uploadFile1");
             assert.equal(file.size, 12);
+            assert.equal(file.checksum, "2ef7bde608ce5404e97d5f042f95f89f1c232871");
         });
         
         it('should parse the multipart form-data successfully given utf8 encoded form data', async () => {
