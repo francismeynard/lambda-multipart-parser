@@ -13,7 +13,8 @@ const Busboy = require('busboy');
                 content: <Buffer 25 50 6f 62 ... >,
                 contentType: 'application/pdf',
                 encoding: '7bit',
-                fieldname: 'uploadFile1'
+                fieldname: 'uploadFile1',
+                size: 26000
             }
         ],
         field1: 'VALUE1',
@@ -43,6 +44,7 @@ const parse = (event) => new Promise((resolve, reject) => {
                 uploadFile.contentType = mimetype;
                 uploadFile.encoding = encoding;
                 uploadFile.fieldname = fieldname;
+                uploadFile.size = Buffer.byteLength(uploadFile.content);
                 result.files.push(uploadFile);
             }
         });

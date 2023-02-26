@@ -45,6 +45,7 @@ describe('MultipartParser', () => {
             assert.equal(file.contentType, "text/plain");
             assert.equal(file.encoding, "7bit");
             assert.equal(file.fieldname, "uploadFile1");
+            assert.equal(file.size, 12);
         });
 
         it('should parse the multipart form-data successfully given base64 encoded form data', async () => {
@@ -72,6 +73,7 @@ describe('MultipartParser', () => {
             assert.equal(file.contentType, "text/plain");
             assert.equal(file.encoding, "7bit");
             assert.equal(file.fieldname, "uploadFile1");
+            assert.equal(file.size, 12);
         });
         
         it('should parse the multipart form-data successfully given utf8 encoded form data', async () => {
