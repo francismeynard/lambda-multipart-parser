@@ -25,7 +25,7 @@ const parse = (event) => new Promise((resolve, reject) => {
 
     const busboy = Busboy({
         headers: {
-            'content-type': event.headers['content-type'] || event.headers['Content-Type']
+            'content-type': event.headers //['content-type'] || event.headers['Content-Type']
         }
     });
     const result = {
