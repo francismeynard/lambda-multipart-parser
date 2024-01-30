@@ -21,15 +21,13 @@ const Busboy = require('busboy');
     }
  */
 const parse = (event) => new Promise((resolve, reject) => {
-    console.log("BUSBOyy", JSON.stringify(event));
+    console.log("BUSBOyy---", JSON.stringify(event));
 
     const bb = Busboy({
-        ...event.headers,
-        'content-type': event.headers['content-type'] || event.headers['Content-Type']
-    }); /*{
-            'content-type': event.headers['content-type'] || event.headers['Content-Type']
+        headers: {
+            'Content-Type': event.headers['content-type'] || event.headers['Content-Type']
         }
-    });*/
+    });
     const result = {
         files: []
     };
