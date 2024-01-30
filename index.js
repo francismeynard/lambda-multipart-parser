@@ -21,21 +21,22 @@ const Busboy = require('busboy');
     }
  */
 const parse = (event) => new Promise((resolve, reject) => {
-    console.log("BUSBOy---!!!!!!", JSON.stringify(event));
+    console.log("BUSBOyy", JSON.stringify(event));
 
-    const busboy = Busboy({
-        headers: {
-            'content-type': event.headers //['content-type'] || event.headers['Content-Type']
+    const bb = Busboy({
+        headers: event.headers
+    }); /*{
+            'content-type': event.headers['content-type'] || event.headers['Content-Type']
         }
-    });
+    });*/
     const result = {
         files: []
     };
 
-    busboy.on('file', (fieldname, file, info) => {
-        const { filename, encoding, mimeType } = info;
+    bb.on('file', (fieldname, file, info) => {
         const uploadFile = {};
-
+        const { filename, encoding, mimeType } = info;
+        
         file.on('data', data => {
             uploadFile.content = data;
         });
@@ -47,27 +48,28 @@ const parse = (event) => new Promise((resolve, reject) => {
                 uploadFile.encoding = encoding;
                 uploadFile.fieldname = fieldname;
                 uploadFile.size = Buffer.byteLength(uploadFile.content);
+
                 result.files.push(uploadFile);
             }
         });
     });
 
-    busboy.on('field', (fieldname, value) => {
+    bb.on('field', (fieldname, value) => {
         result[fieldname] = value;
     });
 
-    busboy.on('error', error => {
+    bb.on('error', error => {
         reject(error);
     });
 
-    busboy.on('close', () => {
+    bb.on('close', () => {
         resolve(result);
     });
 
     const encoding = event.encoding || (event.isBase64Encoded ? "base64" : "binary");
 
-    busboy.write(event.body, encoding);
-    busboy.end();
+    bb.write(event.body, encoding);
+    bb.end();
 });
 
 module.exports.parse = parse;
