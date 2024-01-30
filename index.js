@@ -21,7 +21,7 @@ const Busboy = require('busboy');
     }
  */
 const parse = (event) => new Promise((resolve, reject) => {
-    const busboy = new Busboy({
+    const busboy = Busboy({
         headers: {
             'content-type': event.headers['content-type'] || event.headers['Content-Type']
         }
@@ -30,7 +30,8 @@ const parse = (event) => new Promise((resolve, reject) => {
         files: []
     };
 
-    busboy.on('file', (fieldname, file, filename, encoding, mimetype) => {
+    busboy.on('file', (fieldname, file, info) => {
+        const { filename, encoding, mimeType } = info;
         const uploadFile = {};
 
         file.on('data', data => {
@@ -40,9 +41,10 @@ const parse = (event) => new Promise((resolve, reject) => {
         file.on('end', () => {
             if (uploadFile.content) {
                 uploadFile.filename = filename;
-                uploadFile.contentType = mimetype;
+                uploadFile.contentType = mimeType;
                 uploadFile.encoding = encoding;
                 uploadFile.fieldname = fieldname;
+                uploadFile.size = Buffer.byteLength(uploadFile.content);
                 result.files.push(uploadFile);
             }
         });
@@ -56,7 +58,7 @@ const parse = (event) => new Promise((resolve, reject) => {
         reject(error);
     });
 
-    busboy.on('finish', () => {
+    busboy.on('close', () => {
         resolve(result);
     });
 
