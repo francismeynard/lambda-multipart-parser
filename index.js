@@ -23,10 +23,12 @@ const Busboy = require('busboy');
 const parse = (event) => new Promise((resolve, reject) => {
     console.log("BUSBOX", JSON.stringify(event.headers));
 
+    let ContentType = event.headers['content-type'] || event.headers['Content-Type'];
+    ContentType = ContentType.split(";")[0];
 
     const busboy = Busboy({
         headers: {
-            'content-type': event.headers['content-type'] || event.headers['Content-Type']
+            'content-type': ContentType
         }
     });
     const result = {
