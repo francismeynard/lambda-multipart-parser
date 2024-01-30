@@ -21,6 +21,9 @@ const Busboy = require('busboy');
     }
  */
 const parse = (event) => new Promise((resolve, reject) => {
+    console.log("BUSBOX", JSON.stringify(event.headers));
+
+
     const busboy = Busboy({
         headers: {
             'content-type': event.headers['content-type'] || event.headers['Content-Type']
@@ -48,7 +51,7 @@ const parse = (event) => new Promise((resolve, reject) => {
                 result.files.push(uploadFile);
             }
         });
-    });
+    }); //.end(event.request.rawBody);
 
     busboy.on('field', (fieldname, value) => {
         result[fieldname] = value;
