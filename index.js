@@ -27,10 +27,12 @@ const parse = (event) => new Promise((resolve, reject) => {
     ContentType = ContentType.split(";")[0];
 
     const busboy = Busboy({
-        headers: {
+        headers: event.headers
+    }); /*{
+            ...event.headers,
             'content-type': ContentType
         }
-    });
+    });*/
     const result = {
         files: []
     };
