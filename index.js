@@ -21,7 +21,7 @@ const Busboy = require('busboy');
     }
  */
 const parse = (event) => new Promise((resolve, reject) => {
-    console.log("BUSBOyy---", JSON.stringify(event));
+    console.log("BUSBOyy---!!!! TESTIN TESTING", JSON.stringify(event));
 
     const bb = Busboy({
         headers: {
