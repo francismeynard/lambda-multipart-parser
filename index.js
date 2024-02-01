@@ -21,18 +21,22 @@ const Busboy = require('busboy');
     }
  */
 const parse = (event) => new Promise((resolve, reject) => {
-    const busboy = new Busboy({
+    console.log("BUSBOyy---!!!! TESTIN TESTING123", JSON.stringify(event));
+
+    const bb = Busboy({
         headers: {
-            'content-type': event.headers['content-type'] || event.headers['Content-Type']
-        }
+            'Content-Type': event.headers['content-type'] || event.headers['Content-Type']
+        },
+        'Content-Type': event.headers['content-type'] || event.headers['Content-Type']
     });
     const result = {
         files: []
     };
 
-    busboy.on('file', (fieldname, file, filename, encoding, mimetype) => {
+    bb.on('file', (fieldname, file, info) => {
         const uploadFile = {};
-
+        const { filename, encoding, mimeType } = info;
+        
         file.on('data', data => {
             uploadFile.content = data;
         });
@@ -40,30 +44,32 @@ const parse = (event) => new Promise((resolve, reject) => {
         file.on('end', () => {
             if (uploadFile.content) {
                 uploadFile.filename = filename;
-                uploadFile.contentType = mimetype;
+                uploadFile.contentType = mimeType;
                 uploadFile.encoding = encoding;
                 uploadFile.fieldname = fieldname;
+                uploadFile.size = Buffer.byteLength(uploadFile.content);
+
                 result.files.push(uploadFile);
             }
         });
     });
 
-    busboy.on('field', (fieldname, value) => {
+    bb.on('field', (fieldname, value) => {
         result[fieldname] = value;
     });
 
-    busboy.on('error', error => {
+    bb.on('error', error => {
         reject(error);
     });
 
-    busboy.on('finish', () => {
+    bb.on('close', () => {
         resolve(result);
     });
 
     const encoding = event.encoding || (event.isBase64Encoded ? "base64" : "binary");
 
-    busboy.write(event.body, encoding);
-    busboy.end();
+    bb.write(event.body, encoding);
+    bb.end();
 });
 
 module.exports.parse = parse;
